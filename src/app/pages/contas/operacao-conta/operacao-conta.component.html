@@ -1,0 +1,53 @@
+<div class="container mt-5 d-flex justify-content-center" >
+    <div>
+        <h1>{{ operacao == 'D' ? 'Deposito' :'Transferencia'}}</h1>
+
+        <form *ngIf="operacao == 'D'" [formGroup]="formGroupDeposito" class="example-form mt-4" (ngSubmit)="operacoes()">
+
+            <!--Input de nome do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroupDeposito.get('valor')?.errors &&
+            formGroupDeposito.get('valor')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width"> 
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="valor">
+            </mat-form-field>
+
+            <!--Botao de submissao do formulario-->
+            <div class="d-flex justify-content-center">
+                <button [disabled]="!formGroupDeposito.valid" type="submit" mat-raised-button color="primary"> 
+                    {{ operacao == 'D' ? 'Depositar' :'Transferir'}}
+                </button>
+            </div>
+        </form>
+
+        <form *ngIf="operacao == 'T'" [formGroup]="formGroupTransferencia" class="example-form mt-4" (ngSubmit)="operacoes()">
+
+            <small class="text-danger mb-2" *ngIf="formGroupTransferencia.get('conta_destino')?.errors &&
+            formGroupTransferencia.get('conta_destino')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Conta destino</mat-label>
+                <!-- <textarea matInput formControlName="cliente"></textarea> -->
+                <mat-select formControlName="conta_destino">
+                    <mat-option *ngFor="let conta of contas" [value]="conta.id">
+                    {{conta.numero + ' - ' + conta.agencia}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!--Input de nome do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroupTransferencia.get('valor')?.errors &&
+            formGroupTransferencia.get('valor')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width"> 
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="valor">
+            </mat-form-field>
+
+            <!--Botao de submissao do formulario-->
+            <div class="d-flex justify-content-center">
+                <button [disabled]="!formGroupTransferencia.valid" type="submit" mat-raised-button color="primary"> 
+                    {{ operacao == 'D' ? 'Depositar' :'Transferir'}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
